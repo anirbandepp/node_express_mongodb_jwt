@@ -50,8 +50,10 @@ router.post("/", async (req, res) => {
 
         // send the token in a http-only cookie
         res.cookie("token", token, {
-            httpOnly: true
-        });
+            httpOnly: true,
+            secure: true,
+            sameSite: "none"
+        }).send();
 
         res.json({ "token": token });
 
@@ -90,8 +92,10 @@ router.post("/login", async (req, res) => {
 
         // send the token in a http-only cookie
         res.cookie("token", token, {
-            httpOnly: true
-        });
+            httpOnly: true,
+            secure: true,
+            sameSite: "none"
+        }).send();
 
         res.json({ "token": token });
 
@@ -103,10 +107,13 @@ router.post("/login", async (req, res) => {
 
 // logout the user
 router.get("/logout", (req, res) => {
+
     res.cookie("token", "", {
         httpOnly: true,
+        secure: true,
+        sameSite: "none",
         expires: new Date(0)
-    });
+    }).send();
 });
 
 // Login check middleware
